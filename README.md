@@ -1,1 +1,1 @@
-# express-server-base
+# Sports Activity Manager backend
