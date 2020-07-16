@@ -1,10 +1,12 @@
 const home = require('./home');
 
-const activitiesList = require('./activities/activities-list');
+const activitiesListGet = require('./activities/activities-list');
+const activitiesItemGet = require('./activities/activities-item');
 
 module.exports = {
   routes: [
     home,
-    activitiesList
+    activitiesListGet,
+    activitiesItemGet
   ]
 };
