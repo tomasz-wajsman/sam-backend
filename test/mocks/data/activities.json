@@ -1,0 +1,5 @@
+[
+  { "name": "Running for 5 kilometers", "category": "running", "start_date": 1594888097, "end_date": 1594891817, "distance": 5000 },
+  { "name": "Cycling for 50 kilometers", "category": "cycling", "start_date": 1584888097, "end_date": 1584891817, "distance": 50000 },
+  { "name": "Local football team match", "category": "football", "start_date": 1594388097, "end_date": 1594391817 }
+]
