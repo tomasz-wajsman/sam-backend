@@ -1,0 +1,36 @@
+{
+  "name": "transport-module-backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "test": "npx jest --env=node --coverage"
+  },
+  "dependencies": {
+    "assert": "^2.0.0",
+    "axios": "^0.19.2",
+    "cookie-parser": "^1.4.5",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "expect": "^25.1.0",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jest": "^25.1.0",
+    "lodash": "^4.17.15",
+    "minimist": "^1.2.5",
+    "mkdirp": "^1.0.3",
+    "moment": "^2.24.0",
+    "mongodb-memory-server": "^6.4.1",
+    "mongoose": "^5.9.5",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.2",
+    "pug": "^2.0.4",
+    "supertest": "^4.0.2"
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.17.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1"
+  }
+}

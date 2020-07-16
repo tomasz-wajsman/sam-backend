@@ -1,0 +1,10 @@
+{
+  "examples": [
+    { "id": 1, "userId": 1, "date": "2020-01-01", "title": "Example 1", "description": "Description 1" },
+    { "id": 2, "userId": 2, "date": "2020-01-01", "title": "Example 2", "description": "Description 2" },
+    { "id": 3, "userId": 2, "date": "2020-01-01", "title": "Example 3", "description": "Description 3" },
+    { "id": 4, "userId": 3, "date": "2020-01-01", "title": "Example 4", "description": "Description 4" },
+    { "id": 5, "userId": 3, "date": "2020-01-01", "title": "Example 5", "description": "Description 5" },
+    { "id": 6, "userId": 3, "date": "2020-01-01", "title": "Example 6", "description": "Description 6" }
+  ]
+}
