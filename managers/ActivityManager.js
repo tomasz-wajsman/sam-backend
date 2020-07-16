@@ -12,7 +12,13 @@ class ActivityManager {
   }
 
   async getSingleActivity(activityID) {
-
+    let result = {};
+    try {
+      result = await models.Activity.findById(activityID);
+    } catch (e) {
+      throw new Error('Could not get an activity');
+    }
+    return result;
   }
 
   async createActivity(activity) {

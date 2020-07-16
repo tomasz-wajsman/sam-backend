@@ -14,7 +14,6 @@ const inMemoryServer = require('../../../db/mongo');
 const models = require('../../../../database/mongo/models');
 const mockedActivities = require('../../../mocks/data/activities.json');
 
-
 const activityIds = [];
 
 describe('Activity endpoints tests', () => {
@@ -30,7 +29,7 @@ describe('Activity endpoints tests', () => {
       console.error(ex);
     }
   });
-  test('Returns the list of activities', (done) => {
+  test('Returns the list of activities', done => {
     request(app)
       .get('/activities')
       .expect('Content-Type', /json/)
@@ -48,6 +47,33 @@ describe('Activity endpoints tests', () => {
         activities.forEach(activity => activityIds.push(activity['_id']));
         done();
       });
+  });
+  test('Returns the single activities', done => {
+    const promises = [];
+    activityIds.forEach(id => {
+      promises.push(
+        request(app)
+          .get(`/activities/${id}`)
+          .expect('Content-Type', /json/)
+          .expect(200)
+          .then(res => {
+            // check if error was not thrown and the response is correct
+            assert.notEqual(res, null, 'Nothing was received');
+            // check if a response is the object
+            const activity = res.body.activity;
+            // check ID and other fields
+            assert.notEqual(activity['_id'], undefined, 'The activity has no ID');
+            assert.equal(activity['_id'], id, 'The activity has an incorrect ID');
+            assert.notEqual(activity.name, undefined, 'The activity name was not received');
+            assert.notEqual(activity.category, undefined, 'The activity category was not received');
+            assert.notEqual(activity.start_date, undefined, 'The activity start date was not received');
+            assert.notEqual(activity.end_date, undefined, 'The activity end date was not received');
+          })
+      );
+    });
+    Promise.all(promises)
+      .then(() => done())
+      .catch(e => done(e));
   });
   afterAll(async () => {
     try {
