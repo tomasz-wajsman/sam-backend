@@ -14,6 +14,9 @@ const inMemoryServer = require('../../../db/mongo');
 const models = require('../../../../database/mongo/models');
 const mockedActivities = require('../../../mocks/data/activities.json');
 
+
+const activityIds = [];
+
 describe('Activity endpoints tests', () => {
   beforeAll(async () => {
     try {
@@ -41,6 +44,8 @@ describe('Activity endpoints tests', () => {
         assert.equal(Array.isArray(activities), true, 'Activities were not received');
         assert.equal(activities.length > 0, true, 'There are no activities');
         assert.equal(activities.length, mockedActivities.length, 'Wrong activities count');
+        // add activity identifiers for later tests
+        activities.forEach(activity => activityIds.push(activity['_id']));
         done();
       });
   });
