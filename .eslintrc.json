@@ -25,6 +25,7 @@
 	"arrow-parens": 0,
     "no-await-in-loop": 0,
     "class-methods-use-this": 0,
-    "dot-notation": "off"
+    "dot-notation": "off",
+    "object-curly-newline": "off"
     }
 }
