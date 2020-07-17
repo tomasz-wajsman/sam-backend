@@ -12,6 +12,16 @@ const checkActivityID = (req, res, next) => {
   }
 };
 
+const checkActivityDetails = (req, res, next) => {
+  const body = req.body;
+  // check if activity has sufficient and correct parameters
+  const activity = body.activity;
+
+  res.locals.activity = activity;
+  next();
+};
+
 module.exports = {
-  checkActivityID
+  checkActivityID,
+  checkActivityDetails
 };
