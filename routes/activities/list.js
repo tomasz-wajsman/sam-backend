@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const managers = require('../../../managers');
+const managers = require('../../managers');
 
 /* GET activities */
 router.get('/activities', async (req, res, next) => {
