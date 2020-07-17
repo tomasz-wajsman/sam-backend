@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const managers = require('../../managers');
+const managers = require('../../../managers');
 
-const util = require('../../util');
+const util = require('../../../util');
 
 /* GET activity */
 

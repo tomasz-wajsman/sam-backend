@@ -75,6 +75,35 @@ describe('Activity endpoints tests', () => {
       .then(() => done())
       .catch(e => done(e));
   });
+  test('Creates the activity', done => {
+    const activityDetails = {
+      name: 'Basketball training',
+      category: 'basketball',
+      start_date: 1594977660,
+      end_date: 1594981260
+    };
+    request(app)
+      .post('/activities')
+      .send({
+        name: activityDetails.name,
+        category: activityDetails.category,
+        start_date: activityDetails.start_date,
+        end_date: activityDetails.end_date
+      })
+      .expect('Content-Type', /json/)
+      .expect(201)
+      .then(res => {
+        const activity = res.body.activity;
+        // check if error was not thrown and the response is correct
+        assert.notEqual(res, null, 'Nothing was received');
+        // check if the response contains the ID
+        assert.notEqual(activity['_id'], undefined, 'The activity has no ID');
+        assert.notEqual(activity.name, undefined, 'The activity name was not received');
+        assert.notEqual(activity.category, undefined, 'The activity category was not received');
+        assert.notEqual(activity.start_date, undefined, 'The activity start date was not received');
+        assert.notEqual(activity.end_date, undefined, 'The activity end date was not received');
+      });
+  });
   afterAll(async () => {
     try {
       await inMemoryServer.disconnect();
