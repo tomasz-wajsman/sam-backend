@@ -17,9 +17,10 @@ router.put(
       // get parameters
       const activityID = res.locals.activityID;
       const details = res.locals.activity;
-      result = { activity: await managers.activities.updateActivity(activityID, details) };
+      await managers.activities.updateActivity(activityID, details);
       res.status(204);
     } catch (e) {
+      result = e.message;
       res.status(500);
     } finally {
       res.json(result);
