@@ -14,6 +14,7 @@ const inMemoryServer = require('../../../db/mongo');
 const models = require('../../../../database/mongo/models');
 const mockedActivities = require('../../../mocks/data/activities.json');
 
+const tempActivities = {};
 const activityIds = [];
 
 describe('Activity endpoints tests', () => {
@@ -44,43 +45,48 @@ describe('Activity endpoints tests', () => {
         assert.equal(activities.length > 0, true, 'There are no activities');
         assert.equal(activities.length, mockedActivities.length, 'Wrong activities count');
         // add activity identifiers for later tests
-        activities.forEach(activity => activityIds.push(activity['_id']));
+        activities.forEach(activity => {
+          tempActivities[activity['_id']] = activity;
+        });
         done();
       });
   });
   test('Returns the single activities', done => {
     const promises = [];
-    activityIds.forEach(id => {
-      promises.push(
-        request(app)
-          .get(`/activities/${id}`)
-          .expect('Content-Type', /json/)
-          .expect(200)
-          .then(res => {
-            // check if error was not thrown and the response is correct
-            assert.notEqual(res, null, 'Nothing was received');
-            // check if a response is the object
-            const activity = res.body.activity;
-            // check ID and other fields
-            assert.notEqual(activity['_id'], undefined, 'The activity has no ID');
-            assert.equal(activity['_id'], id, 'The activity has an incorrect ID');
-            assert.notEqual(activity.name, undefined, 'The activity name was not received');
-            assert.notEqual(activity.category, undefined, 'The activity category was not received');
-            assert.notEqual(activity.start_date, undefined, 'The activity start date was not received');
-            assert.notEqual(activity.end_date, undefined, 'The activity end date was not received');
-          })
-      );
-    });
+    Object
+      .keys(tempActivities)
+      .forEach(id => {
+        promises.push(
+          request(app)
+            .get(`/activities/${id}`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(res => {
+              // check if error was not thrown and the response is correct
+              assert.notEqual(res, null, 'Nothing was received');
+              // check if a response is the object
+              const activity = res.body.activity;
+              // check ID and other fields
+              assert.notEqual(activity['_id'], undefined, 'The activity has no ID');
+              assert.equal(activity['_id'], tempActivities[id]['_id'], 'The activity has an incorrect ID');
+              assert.equal(activity.name, tempActivities[id].name, 'The activity name was not received');
+              assert.equal(activity.category, tempActivities[id].category, 'The activity category was not received');
+              assert.equal(activity.start_date, tempActivities[id].start_date, 'The activity start date was not received');
+              assert.equal(activity.end_date, tempActivities[id].end_date, 'The activity end date was not received');
+            })
+        );
+      });
     Promise.all(promises)
       .then(() => done())
       .catch(e => done(e));
   });
   test('Creates the activity', done => {
     const activityDetails = {
-      name: 'Basketball training',
-      category: 'basketball',
+      name: 'Nordic Combined',
+      category: 'winter sports',
       start_date: 1594977660,
-      end_date: 1594981260
+      end_date: 1594981260,
+      distance: 10000
     };
     request(app)
       .post('/activities')
@@ -94,10 +100,13 @@ describe('Activity endpoints tests', () => {
         const activity = res.body.activity;
         assert.notEqual(activity, undefined, 'The activity was not returned');
         assert.notEqual(activity['_id'], undefined, 'The activity has no ID');
-        assert.notEqual(activity.name, undefined, 'The activity name was not received');
-        assert.notEqual(activity.category, undefined, 'The activity category was not received');
-        assert.notEqual(activity.start_date, undefined, 'The activity start date was not received');
-        assert.notEqual(activity.end_date, undefined, 'The activity end date was not received');
+        assert.equal(activity.name, activityDetails.name, 'The activity name is wrong');
+        assert.equal(activity.category, activityDetails.category, 'The activity category is wrong');
+        assert.equal(activity.start_date, activityDetails.start_date, 'The activity start date is wrong');
+        assert.equal(activity.end_date, activityDetails.end_date, 'The activity end date is wrong');
+        assert.equal(activity.distance, activityDetails.distance, 'The activity distance is wrong');
+        // add the activity to temporary store
+        tempActivities[activity['_id']] = activity;
         done();
       });
   });
