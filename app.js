@@ -23,7 +23,7 @@ require('./routes/index').routes.forEach(route => {
 // catch 404 and response with 404 message
 app.use((_req, res) => {
   res.status(404);
-  res.json({ message: '404 Not Found' });
+  res.json({ messages: ['Resource was not found'] });
 });
 
 module.exports = app;
