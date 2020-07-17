@@ -120,6 +120,25 @@ describe('Activity endpoints tests', () => {
         done();
       });
   });
+  test('Modifies the activities', done => {
+    const promises = [];
+    Object
+      .keys(tempActivities)
+      .forEach(key => {
+        const modifiedActivity = { ...tempActivities[key] };
+        modifiedActivity.name = 'Modified name';
+        tempActivities[key] = modifiedActivity;
+        promises.push(
+          request(app)
+            .put(`/activities/${key}`)
+            .send({ activity: modifiedActivity })
+            .expect(204)
+        );
+      });
+    Promise.all(promises)
+      .then(() => done())
+      .catch(e => done(e));
+  });
   test('Check if items were updated', done => {
     const promises = [];
     Object
@@ -143,25 +162,6 @@ describe('Activity endpoints tests', () => {
               assert.equal(activity.start_date, tempActivities[id].start_date, 'The activity start date was not received');
               assert.equal(activity.end_date, tempActivities[id].end_date, 'The activity end date was not received');
             })
-        );
-      });
-    Promise.all(promises)
-      .then(() => done())
-      .catch(e => done(e));
-  });
-  test('Modifies the activities', done => {
-    const promises = [];
-    Object
-      .keys(tempActivities)
-      .forEach(key => {
-        const modifiedActivity = { ...tempActivities[key] };
-        modifiedActivity.name = 'Modified name';
-        tempActivities[key] = modifiedActivity;
-        promises.push(
-          request(app)
-            .put(`/activities/${key}`)
-            .send({ activity: modifiedActivity })
-            .expect(204)
         );
       });
     Promise.all(promises)
