@@ -12,7 +12,7 @@ router.put(
   util.params.checkActivityID,
   util.params.checkActivityDetails,
   util.activityExistence.activityExists,
-  async (req, res, next) => {
+  async (req, res) => {
     let result = {};
     try {
       // get parameters

@@ -1,13 +1,9 @@
 /* eslint-disable no-console */
-const env = { ...process.env };
-
 const assert = require('assert');
-const expect = require('expect');
 
 const MongooseClient = require('../../../clients/database/MongooseClient');
 
 let imsConnection;
-let imsUrl;
 let mongooseClient;
 
 const inMemoryServer = require('../../db/mongo');
@@ -19,7 +15,6 @@ describe('POI model tests', () => {
   beforeAll(async () => {
     try {
       // try connecting to the server
-      imsUrl = await inMemoryServer.getConnectionString();
       imsConnection = await inMemoryServer.connect();
       mongooseClient = new MongooseClient(imsConnection);
     } catch (ex) {

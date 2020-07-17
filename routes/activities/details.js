@@ -11,7 +11,7 @@ router.get(
   '/activities/:activityID',
   util.params.checkActivityID,
   util.activityExistence.activityExists,
-  async (req, res, next) => {
+  async (req, res) => {
     let result = {};
     try {
       result = { activity: await managers.activities.getSingleActivity(res.locals.activityID) };

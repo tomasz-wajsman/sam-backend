@@ -1,8 +1,5 @@
 /* eslint-disable no-console */
-const env = { ...process.env };
-
 const assert = require('assert');
-const expect = require('expect');
 
 const MongooseClient = require('../../../clients/database/MongooseClient');
 

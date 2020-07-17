@@ -4,7 +4,7 @@ const router = express.Router();
 const managers = require('../../managers');
 
 /* GET activities */
-router.get('/activities', async (req, res, next) => {
+router.get('/activities', async (req, res) => {
   let result = {};
   try {
     result = { activities: await managers.activities.getActivities() };

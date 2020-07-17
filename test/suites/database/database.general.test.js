@@ -1,15 +1,12 @@
 const assert = require('assert');
-const expect = require('expect');
 
 const DatabaseServiceProvider = require('../../../clients/database/DatabaseServiceProvider');
 const DatabaseClient = require('../../../clients/database/DatabaseClient');
 const MongooseClient = require('../../../clients/database/MongooseClient');
 
 const env = { ...process.env };
-let mongoDatabaseProvider;
 
-const mockedDatabase = require('../../db/mongo');
-let settings = {};
+const settings = {};
 
 describe('Provider tests', () => {
   test('Throws exceptions when using not implemented database provider', async () => {

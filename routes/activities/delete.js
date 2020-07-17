@@ -11,7 +11,7 @@ router.delete(
   '/activities/:activityID',
   util.params.checkActivityID,
   util.activityExistence.activityExists,
-  async (req, res, next) => {
+  async (req, res) => {
     let result = {};
     try {
       // get parameters

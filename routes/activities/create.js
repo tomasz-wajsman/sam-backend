@@ -10,7 +10,7 @@ const util = require('../../util');
 router.post(
   '/activities',
   util.params.checkActivityDetails,
-  async (req, res, next) => {
+  async (req, res) => {
     let result = {};
     try {
       // get parameters
