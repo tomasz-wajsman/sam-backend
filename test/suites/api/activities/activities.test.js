@@ -5,7 +5,6 @@ const assert = require('assert');
 const app = require('../../../../app');
 
 let imsConnection;
-let imsUrl;
 let mongooseClient;
 
 const MongooseClient = require('../../../../clients/database/MongooseClient');
@@ -15,13 +14,11 @@ const models = require('../../../../database/mongo/models');
 const mockedActivities = require('../../../mocks/data/activities.json');
 
 const tempActivities = {};
-const activityIds = [];
 
 describe('Activity endpoints tests', () => {
   beforeAll(async () => {
     try {
       // try connecting to the server
-      imsUrl = await inMemoryServer.getConnectionString();
       imsConnection = await inMemoryServer.connect();
       mongooseClient = new MongooseClient(imsConnection);
       // insert the data

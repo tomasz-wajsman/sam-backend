@@ -8,7 +8,7 @@ const activityExists = async (req, res, next) => {
       next();
     } else {
       res.status(404);
-      res.json({ message: 'The activity does not exist ' });
+      res.json({ message: 'The activity does not exist' });
     }
   } catch (e) {
     res.status(500);

@@ -3,6 +3,24 @@ const assert = require('assert');
 
 const app = require('../../../../app');
 
+let imsConnection;
+let mongooseClient;
+
+const MongooseClient = require('../../../../clients/database/MongooseClient');
+const inMemoryServer = require('../../../db/mongo');
+
+const models = require('../../../../database/mongo/models');
+const mockedActivities = require('../../../mocks/data/activities.json');
+
+const notExistingIds = [
+  '111111111111111111111111',
+  '222222222222222222222222',
+  '333333333333333333333333',
+  '444444444444444444444444',
+  '555555555555555555555555',
+  'ffffffffffffffffffffffff'
+];
+
 const invalidIds = [
   '1234',
   'blah',
@@ -26,6 +44,17 @@ const invalidActivities = [
 ];
 
 describe('Activities endpoints invalid use tests', () => {
+  beforeAll(async () => {
+    try {
+      // try connecting to the server
+      imsConnection = await inMemoryServer.connect();
+      mongooseClient = new MongooseClient(imsConnection);
+      // insert the data
+      await models.Activity.insertMany(mockedActivities);
+    } catch (ex) {
+      console.error(ex);
+    }
+  });
   test('Returns 400 on incorrect IDs for getting single activities', (done) => {
     const promises = [];
     invalidIds.forEach(id => {
@@ -61,5 +90,27 @@ describe('Activities endpoints invalid use tests', () => {
     Promise.all(promises)
       .then(() => done())
       .catch(e => done(e));
+  });
+  test('Returns 404 on incorrect identifiers for GET single item request', (done) => {
+    const promises = [];
+    notExistingIds.forEach(id => {
+      promises.push(
+        request(app)
+          .get(`/activities/${id}`)
+          .expect('Content-Type', /json/)
+          .expect(404)
+      );
+    });
+    Promise.all(promises)
+      .then(() => done())
+      .catch(e => done(e));
+  });
+  afterAll(async () => {
+    try {
+      await inMemoryServer.disconnect();
+      await mongooseClient.disconnect();
+    } catch (ex) {
+      console.error(ex);
+    }
   });
 });
