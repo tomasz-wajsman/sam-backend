@@ -80,6 +80,16 @@ describe('Activity endpoints tests', () => {
       .then(() => done())
       .catch(e => done(e));
   });
+  test('Check if the item was added', done => {
+    request(app)
+      .get('/activities')
+      .end((e, res) => {
+        // check if a response is an array of objects and check if has elements
+        const activities = res.body.activities;
+        assert.equal(activities.length === Object.keys(tempActivities).length, true, 'Wrong number of activities');
+        done();
+      });
+  });
   test('Creates the activity', done => {
     const activityDetails = {
       name: 'Nordic Combined',
@@ -109,6 +119,35 @@ describe('Activity endpoints tests', () => {
         tempActivities[activity['_id']] = activity;
         done();
       });
+  });
+  test('Check if items were updated', done => {
+    const promises = [];
+    Object
+      .keys(tempActivities)
+      .forEach(id => {
+        promises.push(
+          request(app)
+            .get(`/activities/${id}`)
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(res => {
+              // check if error was not thrown and the response is correct
+              assert.notEqual(res, null, 'Nothing was received');
+              // check if a response is the object
+              const activity = res.body.activity;
+              // check ID and other fields
+              assert.notEqual(activity['_id'], undefined, 'The activity has no ID');
+              assert.equal(activity['_id'], tempActivities[id]['_id'], 'The activity has an incorrect ID');
+              assert.equal(activity.name, tempActivities[id].name, 'The activity name was not received');
+              assert.equal(activity.category, tempActivities[id].category, 'The activity category was not received');
+              assert.equal(activity.start_date, tempActivities[id].start_date, 'The activity start date was not received');
+              assert.equal(activity.end_date, tempActivities[id].end_date, 'The activity end date was not received');
+            })
+        );
+      });
+    Promise.all(promises)
+      .then(() => done())
+      .catch(e => done(e));
   });
   test('Modifies the activities', done => {
     const promises = [];
