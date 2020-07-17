@@ -5,7 +5,7 @@ const managers = require('../../managers');
 
 const util = require('../../util');
 
-/* create an activity */
+/* update an activity */
 
 router.put(
   '/activities/:activityID',
