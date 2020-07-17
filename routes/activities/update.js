@@ -11,6 +11,7 @@ router.put(
   '/activities/:activityID',
   util.params.checkActivityID,
   util.params.checkActivityDetails,
+  util.activityExistence.activityExists,
   async (req, res, next) => {
     let result = {};
     try {

@@ -10,6 +10,7 @@ const util = require('../../util');
 router.delete(
   '/activities/:activityID',
   util.params.checkActivityID,
+  util.activityExistence.activityExists,
   async (req, res, next) => {
     let result = {};
     try {

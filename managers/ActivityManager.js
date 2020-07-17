@@ -1,6 +1,16 @@
 const models = require('../database/mongo/models');
 
 class ActivityManager {
+  async activityExists(activityID) {
+    let exists;
+    try {
+      exists = await models.Activity.exists({ _id: activityID });
+    } catch (e) {
+      throw new Error('Could not check if activity does exist in database');
+    }
+    return exists;
+  }
+
   async getActivities() {
     let result = {};
     try {
