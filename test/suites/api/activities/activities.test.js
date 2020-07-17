@@ -84,24 +84,21 @@ describe('Activity endpoints tests', () => {
     };
     request(app)
       .post('/activities')
-      .send({
-        name: activityDetails.name,
-        category: activityDetails.category,
-        start_date: activityDetails.start_date,
-        end_date: activityDetails.end_date
-      })
+      .send({ activity: activityDetails })
       .expect('Content-Type', /json/)
       .expect(201)
       .then(res => {
-        const activity = res.body.activity;
         // check if error was not thrown and the response is correct
         assert.notEqual(res, null, 'Nothing was received');
-        // check if the response contains the ID
+        // check if the response contains the ID and other parameters
+        const activity = res.body.activity;
+        assert.notEqual(activity, undefined, 'The activity was not returned');
         assert.notEqual(activity['_id'], undefined, 'The activity has no ID');
         assert.notEqual(activity.name, undefined, 'The activity name was not received');
         assert.notEqual(activity.category, undefined, 'The activity category was not received');
         assert.notEqual(activity.start_date, undefined, 'The activity start date was not received');
         assert.notEqual(activity.end_date, undefined, 'The activity end date was not received');
+        done();
       });
   });
   afterAll(async () => {
