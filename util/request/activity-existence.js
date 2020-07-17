@@ -8,11 +8,11 @@ const activityExists = async (req, res, next) => {
       next();
     } else {
       res.status(404);
-      res.json({ message: 'The activity does not exist' });
+      res.json({ messages: ['The activity does not exist'] });
     }
   } catch (e) {
     res.status(500);
-    res.json({ message: 'Could not check the activity' });
+    res.json({ messages: ['Could not check the activity'] });
   }
 };
 
