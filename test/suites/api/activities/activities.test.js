@@ -201,16 +201,4 @@ describe('Activity endpoints tests', () => {
       console.error(ex);
     }
   });
-  /*
-  test('Returns 404 on unknown path', (done) => {
-    request(app)
-      .get('/unknown/path')
-      .expect('Content-Type', /json/)
-      .expect(404)
-      .end(e => {
-        assert.equal(e, null, e);
-        done();
-      });
-  });
-  */
 });
