@@ -22,7 +22,13 @@ class ActivityManager {
   }
 
   async createActivity(activity) {
-
+    let result = {};
+    try {
+      result = await models.Activity.create(activity);
+    } catch (e) {
+      throw new Error('Could not create an activity');
+    }
+    return result;
   }
 
   async updateActivity(activity) {
