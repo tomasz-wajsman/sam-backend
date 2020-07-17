@@ -20,63 +20,68 @@ const checkActivityDetails = (req, res, next) => {
 
   const messages = [];
 
-  // activity name
-  const name = activity.name;
-  if (!name) {
-    correct = false;
-    messages.push('Activity name was not provided');
-  } else if (name === '') {
-    correct = false;
-    messages.push('Activity name is empty');
-  }
-
-  // category name
-  const category = activity.category;
-  if (!category) {
-    correct = false;
-    messages.push('Activity category was not provided');
-  } else if (category === '') {
-    correct = false;
-    messages.push('Activity category is empty');
-  }
-
-  // start date
-  const startDate = activity.start_date;
-  if (!startDate) {
-    correct = false;
-    messages.push('Start date was not provided');
-  } else if (Date.parse(startDate) < 0) {
-    correct = false;
-    messages.push('Start date is negative');
-  }
-
-  // end date
-  const endDate = activity.end_date;
-  if (!endDate) {
-    correct = false;
-    messages.push('End date was not provided');
-  } else if (Date.parse(endDate) < 0) {
-    correct = false;
-    messages.push('End date is negative');
-  }
-
-  // check dates
-  if (Date.parse(startDate) >= Date.parse(endDate)) {
-    correct = false;
-    messages.push('The start date is same or after end date');
-  }
-
-  // distance if provided
-  const distance = activity.distance;
-  if (distance) {
-    const distanceNum = Number.parseFloat(distance);
-    if (Number.isNaN(distanceNum)) {
+  try {
+    // activity name
+    const name = activity.name;
+    if (!name) {
       correct = false;
-      messages.push('Incorrect distance');
-    } else if (distanceNum <= 0) {
+      messages.push('Activity name was not provided');
+    } else if (name === '') {
       correct = false;
-      messages.push('Zero or negative distance');
+      messages.push('Activity name is empty');
     }
+
+    // category name
+    const category = activity.category;
+    if (!category) {
+      correct = false;
+      messages.push('Activity category was not provided');
+    } else if (category === '') {
+      correct = false;
+      messages.push('Activity category is empty');
+    }
+
+    // start date
+    const startDate = activity.start_date;
+    if (!startDate) {
+      correct = false;
+      messages.push('Start date was not provided');
+    } else if (Number.parseInt(startDate, 10) < 0) {
+      correct = false;
+      messages.push('Start date is negative');
+    }
+
+    // end date
+    const endDate = activity.end_date;
+    if (!endDate) {
+      correct = false;
+      messages.push('End date was not provided');
+    } else if (Number.parseInt(endDate, 10) < 0) {
+      correct = false;
+      messages.push('End date is negative');
+    }
+
+    // check dates
+    if (Date.parse(startDate) >= Date.parse(endDate)) {
+      correct = false;
+      messages.push('The start date is same or after end date');
+    }
+
+    // distance if provided
+    const distance = activity.distance;
+    if (distance) {
+      const distanceNum = Number.parseFloat(distance);
+      if (Number.isNaN(distanceNum)) {
+        correct = false;
+        messages.push('Incorrect distance');
+      } else if (distanceNum <= 0) {
+        correct = false;
+        messages.push('Zero or negative distance');
+      }
+    }
+  } catch (e) {
+    messages.push('Incorrect body');
+    correct = false;
   }
 
   if (correct) {
