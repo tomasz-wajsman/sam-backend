@@ -31,8 +31,18 @@ class ActivityManager {
     return result;
   }
 
-  async updateActivity(activity) {
-
+  async updateActivity(activityID, details) {
+    let result = {};
+    try {
+      result = await models.Activity.findByIdAndUpdate(
+        activityID,
+        details,
+        { new: false }
+      );
+    } catch (e) {
+      throw new Error('Could not update an activity');
+    }
+    return result;
   }
 
   async deleteActivity(activityID) {
