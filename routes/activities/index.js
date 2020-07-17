@@ -7,6 +7,7 @@ router.route('/activities')
 
 router.route('/activities/:activityID')
   .get(require('./details'))
-  .put(require('./update'));
+  .put(require('./update'))
+  .delete(require('./delete'));
 
 module.exports = router;

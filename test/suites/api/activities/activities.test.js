@@ -168,6 +168,34 @@ describe('Activity endpoints tests', () => {
       .then(() => done())
       .catch(e => done(e));
   });
+  test('Deletes the activities', done => {
+    const promises = [];
+    Object
+      .keys(tempActivities)
+      .forEach(key => {
+        tempActivities[key] = undefined;
+        promises.push(
+          request(app)
+            .delete(`/activities/${key}`)
+            .expect(204)
+        );
+      });
+    Promise.all(promises)
+      .then(() => done())
+      .catch(e => done(e));
+  });
+  test('Check if items were deleted', done => {
+    request(app)
+      .get('/activities')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end((_, res) => {
+        // check if a response is an array of objects and check if has elements
+        const activities = res.body.activities;
+        assert.equal(activities.length === 0, true, 'The activities are still saved after deleting');
+        done();
+      });
+  });
   afterAll(async () => {
     try {
       await inMemoryServer.disconnect();

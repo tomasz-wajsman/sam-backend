@@ -46,7 +46,13 @@ class ActivityManager {
   }
 
   async deleteActivity(activityID) {
-
+    let result = {};
+    try {
+      result = await models.Activity.findByIdAndDelete(activityID);
+    } catch (e) {
+      throw new Error('Could not delete an activity');
+    }
+    return result;
   }
 }
 module.exports = ActivityManager;
