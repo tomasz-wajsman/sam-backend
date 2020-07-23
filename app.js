@@ -4,6 +4,17 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const app = express();
+const cors = require('cors');
+
+// CORS
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  res.setHeader('Access-Control-Allow-Methods', ['PATCH', 'POST', 'GET', 'DELETE', 'PUT']);
+  res.setHeader('Access-Control-Allow-Headers', ['Content-Type']);
+  res.setHeader('Access-Control-Expose-Headers', ['Content-Type']);
+  next();
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
