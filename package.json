@@ -1,6 +1,6 @@
 {
-  "name": "transport-module-backend",
-  "version": "0.0.0",
+  "name": "sam-backend",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
@@ -10,6 +10,7 @@
     "assert": "^2.0.0",
     "axios": "^0.19.2",
     "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "expect": "^25.1.0",
