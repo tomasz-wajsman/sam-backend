@@ -21,8 +21,9 @@ This Express.js application is the server for the mobile and web client. It allo
 
 ### How to use this application?
 1. Clone this repository
-2. Configure the server as shown in *How to configure the server?* section
-3. Start the server
+2. Type *npm install* to download the dependencies
+3. Configure the server as shown in *How to configure the server?* section
+4. Start the server
 
 ### API endpoints
 * **GET /** - home route
