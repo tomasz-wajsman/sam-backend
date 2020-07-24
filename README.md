@@ -11,7 +11,7 @@ This Express.js application is the server for the mobile and web client. It allo
 
 ### How to configure the server?
 1. Create the file named *.env* in the server directory
-2. The file must contain this content:
+2. The file must contain this content (the values are the examples):
 
 * PORT=8080 (server port)
 * DATABASE_PROVIDER=mongoose (database provider, must be **mongoose**)
