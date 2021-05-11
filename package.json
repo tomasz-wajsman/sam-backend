@@ -17,7 +17,7 @@
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jest": "^25.1.0",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "minimist": "^1.2.5",
     "mkdirp": "^1.0.3",
     "moment": "^2.24.0",
