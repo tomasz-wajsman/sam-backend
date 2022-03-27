@@ -18,7 +18,7 @@
     "http-errors": "~1.6.3",
     "jest": "^25.1.0",
     "lodash": "^4.17.19",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mkdirp": "^1.0.3",
     "moment": "^2.24.0",
     "mongodb-memory-server": "^6.4.1",
